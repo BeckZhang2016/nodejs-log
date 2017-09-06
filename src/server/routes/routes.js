@@ -2,15 +2,16 @@
  * Created by zhangjun on 2017/9/5.
  */
 const router = require('express').Router();
+const log = require('../../lib/logger');
 
 router.get('/', (req, res) => {
-    console.log(`${req}`);
-    res.send(req.query)
+  log.info(`get ${req}`);
+  res.send(req.query)
 });
 
 router.post('/', (req, res) => {
-    console.log(`${req}`);
-    res.send(req.body)
+  log.info(`post ${req}`);
+  res.send(req.body)
 });
 
 
