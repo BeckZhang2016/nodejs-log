@@ -44,16 +44,16 @@ function reqSerializer(req) {
   };
 }
 
-function loggerSuccess(req, res, next) {
+function loggerNormal(req, res, next) {
   bunyanlog.fields.req_id = req.headers['x-transaction-id'];
   bunyanlog.debug({req: req});
   next();
   bunyanlog.debug({res: res});
 }
 
-function loggerFail(err, req, res, next) {
+function loggerError(err, req, res, next) {
   bunyanlog.error(err);
   next();
 }
 
-module.exports = {loggerSuccess, loggerFail, bunyanlog};
+module.exports = {loggerNormal, loggerError, bunyanlog};
