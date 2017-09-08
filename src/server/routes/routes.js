@@ -5,13 +5,13 @@ const router = require('express').Router();
 const {bunyanlog} = require('../../lib/logger');
 
 router.get('/', (req, res, next) => {
-  bunyanlog.info({req: req},`get ${req}`);
+  bunyanlog.info(`get`);
   next(new Error('is error'));
   res.send(req.query)
 });
 
 router.post('/', (req, res) => {
-  bunyanlog.info({req: req},`post ${req}`);
+  bunyanlog.info(`post`);
   res.send(req.body)
 });
 

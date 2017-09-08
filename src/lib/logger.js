@@ -1,4 +1,14 @@
 const bunyan = require('bunyan');
+const fs = require('fs');
+
+const {logConfig} = require('../config/config');
+
+// fs.mkdirSync(logConfig.path);
+
+fs.access(logConfig.path, (err) => {
+  if (err) fs.mkdirSync(logConfig.path);
+});
+
 const bunyanlog = bunyan.createLogger({
   name: 'nodejs-logger',
   streams: [
@@ -8,7 +18,7 @@ const bunyanlog = bunyan.createLogger({
     },
     {
       type: 'rotating-file',
-      path: '../../logs/nodejs.log',
+      path: `${logConfig.path}nodejs-log.log`,
       period: '1d',
       count: 1,
       level: 'debug'
@@ -35,18 +45,15 @@ function reqSerializer(req) {
 }
 
 function loggerSuccess(req, res, next) {
-  bunyanlog.fields.req_id = req.headers['x-tranaction-id'];
+  bunyanlog.fields.req_id = req.headers['x-transaction-id'];
   bunyanlog.debug({req: req});
   next();
   bunyanlog.debug({res: res});
 }
 
 function loggerFail(err, req, res, next) {
-  bunyanlog.fields.req_id = req.headers['x-tranaction-id'];
-  bunyanlog.debug({req: req});
   bunyanlog.error(err);
   next();
-  bunyanlog.debug({res: res});
 }
 
 module.exports = {loggerSuccess, loggerFail, bunyanlog};

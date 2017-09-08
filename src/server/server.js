@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 app.use(loggerSuccess);
 app.use('/api', require('./routes/routes'));
+
 app.use(loggerFail);
 
 app.listen(appConfig.port, () => {
