@@ -1,5 +1,5 @@
 const bunyan = require('bunyan');
-const logger = bunyan.createLogger({
+const bunyanlog = bunyan.createLogger({
   name: 'nodejs-logger',
   streams: [
     {
@@ -8,7 +8,7 @@ const logger = bunyan.createLogger({
     },
     {
       type: 'rotating-file',
-      path: './logs/nodejs.log',
+      path: '../../logs/nodejs.log',
       period: '1d',
       count: 1,
       level: 'debug'
@@ -22,7 +22,6 @@ const logger = bunyan.createLogger({
   }
 });
 
-
 process.on('SIGUSR2', function () {
   bunyan.reopenFileStreams();
 });
@@ -35,4 +34,19 @@ function reqSerializer(req) {
   };
 }
 
-module.exports = logger;
+function loggerSuccess(req, res, next) {
+  bunyanlog.fields.req_id = req.headers['x-tranaction-id'];
+  bunyanlog.debug({req: req});
+  next();
+  bunyanlog.debug({res: res});
+}
+
+function loggerFail(err, req, res, next) {
+  bunyanlog.fields.req_id = req.headers['x-tranaction-id'];
+  bunyanlog.debug({req: req});
+  bunyanlog.error(err);
+  next();
+  bunyanlog.debug({res: res});
+}
+
+module.exports = {loggerSuccess, loggerFail, bunyanlog};
