@@ -3,8 +3,6 @@ const fs = require('fs');
 
 const {logConfig} = require('../config/config');
 
-// fs.mkdirSync(logConfig.path);
-
 fs.access(logConfig.path, (err) => {
   if (err) fs.mkdirSync(logConfig.path);
 });
