@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(loggerNormal);
+
 app.use('/api', require('./routes/routes'));
 
 app.use(loggerError);

@@ -1,4 +1,4 @@
 # project introduce
 
-- nodejs version is v8.x
-- npm version is v5.x
+- nodejs version is v8.4
+- npm version is v5.4
