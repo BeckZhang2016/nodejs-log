@@ -3,6 +3,10 @@
  */
 const path = require('path');
 
+module.exports.globalConfig = {
+
+};
+
 module.exports.appConfig = {
   port: 8080,
   host: '127.0.0.1'

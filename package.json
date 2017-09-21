@@ -11,6 +11,8 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "bunyan": "^1.8.12",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "winston": "^2.3.1",
+    "winston-daily-rotate-file": "^1.7.0"
   }
 }
