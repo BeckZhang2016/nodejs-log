@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {appConfig} = require('../config/config');
 const app = express();
-const {loggerNormal, loggerError} = require('../lib/logger');
+const {loggerNormal, loggerError} = require('../lib/winstonLog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -7,7 +7,7 @@ fs.access(logConfig.path, (err) => {
   if (err) fs.mkdirSync(logConfig.path);
 });
 
-const bunyanlog = bunyan.createLogger({
+const logger = bunyan.createLogger({
   name: 'nodejs-logger',
   streams: [
     {
@@ -43,15 +43,13 @@ function reqSerializer(req) {
 }
 
 function loggerNormal(req, res, next) {
-  bunyanlog.fields.req_id = req.headers['x-transaction-id'];
-  bunyanlog.debug({req: req});
+  logger.debug({req: req});
   next();
-  bunyanlog.debug({res: res});
 }
 
 function loggerError(err, req, res, next) {
-  bunyanlog.error(err);
+  logger.error(err);
   next();
 }
 
-module.exports = {loggerNormal, loggerError, bunyanlog};
+module.exports = {loggerNormal, loggerError, logger};

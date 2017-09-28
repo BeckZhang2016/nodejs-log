@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.createConnection('mongodb://localhost:27017/mydb',{useMongoClient: true});
+const mongodbConfig = require('../../config/config').mongodbConfig;
+mongoose.createConnection(mongodbConfig.db,{useMongoClient: true});
 const Schema = mongoose.Schema;
 
 const blogSchema = new Schema({
