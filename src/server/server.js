@@ -3,9 +3,9 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
-const {appConfig} = require('../config/config');
+const {appConfig} = require('./config/config');
 const app = express();
-const {loggerNormal, loggerError} = require('../lib/winstonLog');
+const {loggerNormal, loggerError} = require('./lib/winstonLog');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -19,5 +19,10 @@ app.use(loggerError);
 app.listen(appConfig.port, () => {
     console.info(`server is starting on ${appConfig.port}`);
 });
+
+process.on('uncaughtException', err=>{
+    console.log(err.stack);
+});
+
 
 module.exports = app;

@@ -1,37 +1,11 @@
 const mongoose = require('mongoose');
-const mongodbConfig = require('../../config/config').mongodbConfig;
-mongoose.createConnection(mongodbConfig.db,{useMongoClient: true});
-const Schema = mongoose.Schema;
+const mongodbConfig = require('../config/config').mongodbConfig;
+const db = mongoose.createConnection(mongodbConfig.db, {useMongoClient: true, promiseLibrary: Promise});
 
-const blogSchema = new Schema({
-  title: String,
-  author: String,
-  body: String,
-  comments: [{body: String, date: Date}],
-  date: {type: Date, default: Date.now},
-  hidden: Boolean,
-  meta: {
-    votes: Number,
-    favs: Number
-  }
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('open !!!');
 });
 
-const Blog = mongoose.model('Blog', blogSchema);
-
-const animalSchema = new Schema({
-  name: String,
-  type: String,
-  tags: { type: [String], index: true }
-});
-
-animalSchema.index({ name: 1, type: -1 });
-
-animalSchema.methods.findSimilarTypes = function (cb) {
-  return this.model('Animal').find({type: this.type}, cb);
-};
-const Animal = mongoose.model('Animal', animalSchema);
-const dog = new Animal({type: 'dog'});
-dog.findSimilarTypes(function (err, dogs) {
-  console.log(dogs); // woof
-});
+module.exports = mongoose;
 
