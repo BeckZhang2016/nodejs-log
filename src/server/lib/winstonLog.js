@@ -4,14 +4,14 @@ require('winston-daily-rotate-file');
 
 const logConfig = require('../config/config').logConfig;
 
-let fileOpt = {
+const fileOpt = {
   filename: logConfig.path + 'nodejs-log.log',
   datePattern: 'yyyy-MM-dd.',
   prepend: true,
   level: process.env.NODE_ENV === 'development' ? 'debug' : 'info'
 };
 
-let consoleOpt = {
+const consoleOpt = {
   timestamp: function () {
     return Date.now();
   },
