@@ -14,5 +14,5 @@ module.exports.mongodbConfig = {
 };
 
 module.exports.logConfig = {
-  path: path.join(__dirname, '../../logs/')
+  path: path.join(__dirname, '../../../logs/')
 };

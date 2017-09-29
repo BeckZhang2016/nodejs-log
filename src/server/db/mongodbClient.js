@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const mongodbConfig = require('../config/config').mongodbConfig;
-const db = mongoose.createConnection(mongodbConfig.db, {useMongoClient: true, promiseLibrary: Promise});
+const db = mongoose.connect(mongodbConfig.db, {useMongoClient: true, promiseLibrary: global.Promise});
 
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', function (err) {
+  throw err;
+});
 db.once('open', function () {
   console.log('open !!!');
 });

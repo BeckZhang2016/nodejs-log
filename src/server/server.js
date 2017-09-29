@@ -7,7 +7,7 @@ const {appConfig} = require('./config/config');
 const app = express();
 const {loggerNormal, loggerError} = require('./lib/winstonLog');
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use(loggerNormal);
@@ -17,12 +17,12 @@ app.use('/api', require('./routes/routes'));
 app.use(loggerError);
 
 app.listen(appConfig.port, () => {
-    console.info(`server is starting on ${appConfig.port}`);
+  console.info(`server is starting on ${appConfig.port}`);
 });
 
-process.on('uncaughtException', err=>{
-    console.log(err.stack);
-});
+/*process.on('uncaughtException', err => {
+  console.error(err.stack);
+});*/
 
 
 module.exports = app;
